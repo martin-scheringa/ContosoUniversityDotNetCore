@@ -24,13 +24,13 @@ namespace ContosoUniversity.Features.Courses
             }
         }
 
-        public class QueryHandler : AsyncRequestHandler<Query, Command>
+        public class QueryHandler : RequestHandler<Query, Command>
         {
             private readonly SchoolContext _db;
 
             public QueryHandler(SchoolContext db) => _db = db;
 
-            protected override Task<Command> HandleCore(Query message) =>
+            protected override Task<Command> Handle(Query message) =>
                 _db.Courses
                     .Where(c => c.Id == message.Id)
                     .ProjectTo<Command>()
